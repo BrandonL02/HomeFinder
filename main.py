@@ -35,9 +35,7 @@ time.sleep(2)
 
 driver.find_element(By.XPATH, '//*[@id="bedRangeLink"]').click()
 
-for x in range(1, 5):
-    if x != 2 and x != 3:
-        continue
+for x in range(2, 4):
     # 2 = studio / 3 = one bedroom
     driver.find_element(By.XPATH,
                         f'/html/body/div[1]/main/section/header/div/span[3]/div/div/div/div[1]/div/button[{x}]').click()
@@ -46,7 +44,7 @@ time.sleep(2)
 
 # Home type
 
-driver.find_element(By.XPATH, '//*[@id="typeSelect"]')
+driver.find_element(By.XPATH, '//*[@id="typeSelect"]').click()
 
 driver.find_element(By.XPATH, '/html/body/div[1]/main/section/header/div/span[5]/div/div/div[1]/button[1]/i').click()
 
