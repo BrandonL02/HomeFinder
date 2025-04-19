@@ -7,9 +7,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 
 # Access apartments.com
-
 driver = webdriver.Chrome()
 
+temp_driver = webdriver.Chrome()
 
 def scrape_apartments(driver):
     apartment_list = []
@@ -35,7 +35,10 @@ def scrape_apartments(driver):
             try:
                 apartment_pricing = apartment.find_element(By.CLASS_NAME, 'property-pricing').text
             except NoSuchElementException:
-                apartment_pricing = 'None'
+                try:
+                    apartment_pricing = apartment.find_element(By.CLASS_NAME, 'property-rents').text
+                except NoSuchElementException:
+                    apartment_pricing = 'None'
 
             try:
                 apartment_beds = apartment.find_element(By.CLASS_NAME, 'property-beds').text
@@ -50,10 +53,13 @@ def scrape_apartments(driver):
                     if x.text != '':
                         apartment_amenities_list.append(x.text)
             except NoSuchElementException:
-                try:
-                    # add steps here to find amenities
-                except NoSuchElementException:
-                    pass  # fallback if element doesn't exist
+                apartment_url = apartment.get_attribute("data-url")
+                temp_driver.get(apartment_url)
+                amenities = temp_driver.find_elements(By.CLASS_NAME, 'amenityLabel')
+                for x in amenities:
+                    if x.text != '':
+                        apartment_amenities_list.append(x.text)
+
 
             apartment_list.append({
                 'Apartment': apartment_title,
@@ -73,5 +79,5 @@ pd.set_option('display.width', 0)  # Adjust to your console width if needed
 pd.set_option('display.max_colwidth', None)
 
 df = scrape_apartments(driver)
-
+df.to_csv("apartment_data.csv", index=False)
 print(df)
