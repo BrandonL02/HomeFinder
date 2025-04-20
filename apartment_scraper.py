@@ -1,15 +1,42 @@
 import time
+import sqlite3
+import re
 
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.options import Options
+
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+
+from amenity_separator import clean_amenity_data
+
+con = sqlite3.connect('apartment_data.db')
+cur = con.cursor()
+
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Run in headless mode
 
 # Access apartments.com
 driver = webdriver.Chrome()
 
 temp_driver = webdriver.Chrome()
+
+
+def clean_price_range(price_str):
+    if "Call for Rent" in price_str:
+        return None, None
+    prices = re.findall(r'\$([\d,]+)', price_str)
+    prices = [int(p.replace(',', '')) for p in prices]
+    if len(prices) == 1:
+        return prices[0], prices[0]
+    elif len(prices) == 2:
+        return prices[0], prices[1]
+    return None, None
+
 
 def scrape_apartments(driver):
     apartment_list = []
@@ -40,6 +67,8 @@ def scrape_apartments(driver):
                 except NoSuchElementException:
                     apartment_pricing = 'None'
 
+            min_price, max_price = clean_price_range(apartment_pricing)
+
             try:
                 apartment_beds = apartment.find_element(By.CLASS_NAME, 'property-beds').text
             except NoSuchElementException:
@@ -60,13 +89,13 @@ def scrape_apartments(driver):
                     if x.text != '':
                         apartment_amenities_list.append(x.text)
 
-
             apartment_list.append({
                 'Apartment': apartment_title,
                 'Address': apartment_address,
-                'Price': apartment_pricing,
+                'MinPrice': min_price,
+                'MaxPrice': max_price,
                 'Beds': apartment_beds,
-                'Amenities': apartment_amenities_list
+                'Amenities': str(apartment_amenities_list)
             })
 
     return pd.DataFrame(apartment_list)
@@ -79,5 +108,13 @@ pd.set_option('display.width', 0)  # Adjust to your console width if needed
 pd.set_option('display.max_colwidth', None)
 
 df = scrape_apartments(driver)
-df.to_csv("apartment_data.csv", index=False)
-print(df)
+
+amenity_df = clean_amenity_data(df)
+
+df.to_sql(name='apartments', con=con, if_exists='replace', index=False)
+
+amenity_df.to_sql(name='amenities', con=con, if_exists='replace', index=False)
+
+# Confirm desired output
+#print(df)
+#print(amenity_df)
