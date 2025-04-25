@@ -2,7 +2,7 @@ import streamlit as st
 
 app_title = 'Tampa Apartment Rent Analysis'
 
-app_sub_title = 'Apartments.com data 2025'
+app_sub_title = 'Source: Apartments.com 2025'
 
 
 def main():
