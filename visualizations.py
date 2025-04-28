@@ -41,6 +41,4 @@ def zip_price_map():
 
     folium.LayerControl().add_to(m)
 
-    # Save the map to an HTML file
-    m.save('zip_price_map.html')
-
+    return m

@@ -1,11 +1,19 @@
 import streamlit as st
 import pandas as pd
 import sqlite3
+import streamlit.components.v1 as components
 
 app_title = 'Tampa Apartment Rent Analysis'
 
 app_sub_title = 'Source: Apartments.com 2025'
 
+def display_folium_map():
+    m = zip_price_map()
+    # Save to temporary HTML file
+    m.save("zip_price_map.html")
+    with open("zip_price_map.html", "r", encoding="utf-8") as f:
+        folium_html = f.read()
+    components.html(folium_html, height=600)
 
 def main():
     st.set_page_config(app_title)
@@ -18,16 +26,11 @@ def main():
     df = pd.read_sql_query(query, conn)
     conn.close()
 
-    min_price = 1400
-    max_price = 1800
-    zip_code = '33637'
+    st.subheader("Apartment Data")
+    st.dataframe(df)
 
-    df = df[(df['MinPrice'] >= min_price) & (df['MaxPrice'] <= max_price) & (df['ZipCode'] == zip_code)]
-
-    st.write(df.shape)
-    st.write(df.head())
-    st.write(df.columns)
-
+    st.subheader("Average Rent Price by Zip Code (Map)")
+    display_folium_map()
 
 if __name__ == "__main__":
     main()
