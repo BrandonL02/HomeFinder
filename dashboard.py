@@ -34,10 +34,5 @@ def main():
     st.subheader("Average Rent Price by Zip Code (Map)")
     display_folium_map()
 
-    # Add interactive map
-    #st.subheader("Interactive Apartment Map")
-    #display_interactive_map(df)
-
-
 if __name__ == "__main__":
     main()
