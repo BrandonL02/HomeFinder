@@ -18,10 +18,11 @@ def display_folium_map():
 
 
 def main():
+    st.set_page_config(app_title, layout="wide")
     st.set_page_config(app_title)
     st.title(app_title)
     st.caption(app_sub_title)
-    st.set_page_config(app_title, layout="wide")
+    
 
     # Load data from the DB
     conn = sqlite3.connect('apartment_data.db')
