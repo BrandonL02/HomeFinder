@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 import streamlit.components.v1 as components
+from visualizations import zip_price_map, display_interactive_apartment_map
 
 
 app_title = 'Tampa Apartment Rent Analysis'
@@ -9,11 +10,16 @@ app_title = 'Tampa Apartment Rent Analysis'
 app_sub_title = 'Source: Apartments.com 2025'
 
 def display_folium_map():
-    from visualizations import zip_price_map
     m = zip_price_map()
-    # Save to temporary HTML file
     m.save("zip_price_map.html")
     with open("zip_price_map.html", "r", encoding="utf-8") as f:
+        folium_html = f.read()
+    components.html(folium_html, height=600)
+
+def display_interactive_map():
+    m = display_interactive_apartment_map()
+    m.save("interactive_apartments_map.html")
+    with open("interactive_apartments_map.html", "r", encoding="utf-8") as f:
         folium_html = f.read()
     components.html(folium_html, height=600)
 
@@ -33,6 +39,10 @@ def main():
 
     st.subheader("Average Rent Price by Zip Code (Map)")
     display_folium_map()
+
+    # Add interactive map
+    st.subheader("Interactive Apartment Map")
+    display_interactive_apartment_map(df)
 
 if __name__ == "__main__":
     main()
