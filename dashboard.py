@@ -18,7 +18,6 @@ def display_folium_map():
 
 
 def main():
-    st.cache_data.clear()
     st.set_page_config(app_title)
     st.title(app_title)
     st.caption(app_sub_title)
@@ -46,8 +45,6 @@ def main():
 
     st.subheader("Average Rent Price by Zip Code (Map)")
     display_folium_map()
-
-    st.write("🔥 LIVE UPDATE CHECK")
 
 
 if __name__ == "__main__":
