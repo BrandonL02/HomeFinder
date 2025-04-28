@@ -21,7 +21,6 @@ def main():
     st.set_page_config(app_title)
     st.title(app_title)
     st.caption(app_sub_title)
-    st.set_page_config(app_title, layout="wide")
 
     st.markdown("""
             <style>
