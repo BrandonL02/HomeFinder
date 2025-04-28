@@ -46,31 +46,7 @@ def zip_price_map():
     return m
 
 
-def display_interactive_apartment_map():
-
-    # Load data from the DB
-    conn = sqlite3.connect('apartment_data.db')
-    query = "SELECT ZipCode, MinPrice, MaxPrice FROM apartments"
-    df = pd.read_sql_query(query, conn)
-    conn.close()
-
-    # Sidebar filters
-    zip_options = df['ZipCode'].dropna().astype(str).str.zfill(5).unique()
-    selected_zips = st.sidebar.multiselect("Filter by Zip Code", sorted(zip_options), default=sorted(zip_options))
-
-    min_price = int(df['MinPrice'].min())
-    max_price = int(df['MaxPrice'].max())
-    selected_range = st.sidebar.slider("Price Range", min_value=min_price, max_value=max_price, value=(min_price, max_price))
-
-    # Filter dataframe
-    filtered_df = df.copy()
-    filtered_df['ZipCode'] = filtered_df['ZipCode'].astype(str).str.zfill(5)
-    filtered_df = filtered_df[
-        (filtered_df['ZipCode'].isin(selected_zips)) &
-        (filtered_df['MinPrice'] >= selected_range[0]) &
-        (filtered_df['MaxPrice'] <= selected_range[1])
-    ]
-
+def display_interactive_apartment_map(filtered_df):
     # Create folium map
     map_center = [28.04, -82.5]  # Tampa
     m = folium.Map(location=map_center, zoom_start=11)
@@ -84,4 +60,6 @@ def display_interactive_apartment_map():
             folium.Marker(location=location, popup=popup_text).add_to(marker_cluster)
 
     return m
+
+
 

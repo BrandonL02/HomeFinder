@@ -16,12 +16,32 @@ def display_folium_map():
         folium_html = f.read()
     components.html(folium_html, height=600)
 
-def display_interactive_map():
-    m = display_interactive_apartment_map()
+def display_interactive_map(df):
+    # Sidebar filters
+    zip_options = df['ZipCode'].dropna().astype(str).str.zfill(5).unique()
+    selected_zips = st.sidebar.multiselect("Filter by Zip Code", sorted(zip_options), default=sorted(zip_options))
+
+    min_price = int(df['MinPrice'].min())
+    max_price = int(df['MaxPrice'].max())
+    selected_range = st.sidebar.slider("Price Range", min_value=min_price, max_value=max_price, value=(min_price, max_price))
+
+    # Filter dataframe
+    filtered_df = df.copy()
+    filtered_df['ZipCode'] = filtered_df['ZipCode'].astype(str).str.zfill(5)
+    filtered_df = filtered_df[
+        (filtered_df['ZipCode'].isin(selected_zips)) &
+        (filtered_df['MinPrice'] >= selected_range[0]) &
+        (filtered_df['MaxPrice'] <= selected_range[1])
+    ]
+
+    # Generate map from filtered data
+    from visualizations import display_interactive_apartment_map
+    m = display_interactive_apartment_map(filtered_df)
     m.save("interactive_apartments_map.html")
     with open("interactive_apartments_map.html", "r", encoding="utf-8") as f:
         folium_interactive_html = f.read()
     components.html(folium_interactive_html, height=600)
+
 
 def main():
     st.set_page_config(app_title)
@@ -42,7 +62,8 @@ def main():
 
     # Add interactive map
     st.subheader("Interactive Apartment Map")
-    display_interactive_map()
+    display_interactive_map(df)
+
 
 if __name__ == "__main__":
     main()
