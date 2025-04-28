@@ -4,10 +4,10 @@ import sqlite3
 import streamlit.components.v1 as components
 from visualizations import zip_price_map
 
-
 app_title = 'Tampa Apartment Rent Analysis'
 
 app_sub_title = 'Source: Apartments.com 2025'
+
 
 def display_folium_map():
     m = zip_price_map()
@@ -34,7 +34,7 @@ def main():
                 }
             </style>
         """, unsafe_allow_html=True)
-    
+
     # Load data from the DB
     conn = sqlite3.connect('apartment_data.db')
     query = "SELECT * FROM apartments"
@@ -46,6 +46,9 @@ def main():
 
     st.subheader("Average Rent Price by Zip Code (Map)")
     display_folium_map()
+
+    st.subheader('Test')
+
 
 if __name__ == "__main__":
     main()
