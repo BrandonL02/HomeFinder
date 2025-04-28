@@ -18,6 +18,7 @@ def display_folium_map():
 
 
 def main():
+    st.cache_data.clear()
     st.set_page_config(app_title)
     st.title(app_title)
     st.caption(app_sub_title)
