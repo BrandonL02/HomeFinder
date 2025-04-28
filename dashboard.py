@@ -21,7 +21,7 @@ def display_interactive_map():
     m.save("interactive_apartments_map.html")
     with open("interactive_apartments_map.html", "r", encoding="utf-8") as f:
         folium_interactive_html = f.read()
-    components.html(folium_interactive_html_html, height=600)
+    components.html(folium_interactive_html, height=600)
 
 def main():
     st.set_page_config(app_title)
