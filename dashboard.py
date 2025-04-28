@@ -23,6 +23,17 @@ def main():
     st.caption(app_sub_title)
     st.set_page_config(app_title, layout="wide")
 
+    st.markdown("""
+            <style>
+                section[data-testid="stSidebar"] {
+                    display: none !important;
+                }
+                div[data-testid="collapsedControl"] {
+                    display: none !important;
+                }
+            </style>
+        """, unsafe_allow_html=True)
+    
     # Load data from the DB
     conn = sqlite3.connect('apartment_data.db')
     query = "SELECT * FROM apartments"
