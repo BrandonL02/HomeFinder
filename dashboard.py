@@ -18,6 +18,12 @@ def main():
     df = pd.read_sql_query(query, conn)
     conn.close()
 
+    min_price = 1400
+    max_price = 1800
+    zip_codes = ['33637', '33605']
+
+    df = df[(df['MinPrice'] >= min_price) & (df['MaxPrice'] <= max_price) & (df['ZipCode'] in zip_codes)]
+
     st.write(df.shape)
     st.write(df.head())
     st.write(df.columns)
