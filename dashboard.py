@@ -47,7 +47,7 @@ def main():
     st.subheader("Average Rent Price by Zip Code (Map)")
     display_folium_map()
 
-    st.subheader('Test')
+    st.write("🔥 LIVE UPDATE CHECK")
 
 
 if __name__ == "__main__":
