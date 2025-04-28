@@ -20,9 +20,9 @@ def main():
 
     min_price = 1400
     max_price = 1800
-    zip_codes = ['33637', '33605']
+    zip_code = '33637'
 
-    df = df[(df['MinPrice'] >= min_price) & (df['MaxPrice'] <= max_price) & (df['ZipCode'] in zip_codes)]
+    df = df[(df['MinPrice'] >= min_price) & (df['MaxPrice'] <= max_price) & (df['ZipCode'] == zip_code)]
 
     st.write(df.shape)
     st.write(df.head())
