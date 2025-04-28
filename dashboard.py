@@ -3,13 +3,14 @@ import pandas as pd
 import sqlite3
 import streamlit.components.v1 as components
 import folium
-from visualizations import zip_price_map
+
 
 app_title = 'Tampa Apartment Rent Analysis'
 
 app_sub_title = 'Source: Apartments.com 2025'
 
 def display_folium_map():
+    from visualizations import zip_price_map
     m = zip_price_map()
     # Save to temporary HTML file
     m.save("zip_price_map.html")
