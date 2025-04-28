@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import sqlite3
 
 app_title = 'Tampa Apartment Rent Analysis'
 
