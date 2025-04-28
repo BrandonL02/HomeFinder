@@ -42,7 +42,7 @@ def main():
 
     # Add interactive map
     st.subheader("Interactive Apartment Map")
-    display_interactive_apartment_map()
+    display_interactive_map()
 
 if __name__ == "__main__":
     main()

@@ -83,7 +83,5 @@ def display_interactive_apartment_map():
             location = [row['Latitude'], row['Longitude']]
             folium.Marker(location=location, popup=popup_text).add_to(marker_cluster)
 
-    # Display map
-
     return m
 
