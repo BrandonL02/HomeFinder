@@ -1,6 +1,7 @@
 import sqlite3
 import pandas as pd
 import folium
+from folium.plugins import MarkerCluster
 
 def zip_price_map():
 
@@ -43,10 +44,14 @@ def zip_price_map():
 
     return m
 
-import folium
-from folium.plugins import MarkerCluster
 
-def display_interactive_apartment_map(df):
+def display_interactive_apartment_map():
+
+    # Load data from the DB
+    conn = sqlite3.connect('apartment_data.db')
+    query = "SELECT ZipCode, MinPrice, MaxPrice FROM apartments"
+    df = pd.read_sql_query(query, conn)
+    conn.close()
 
     # Sidebar filters
     zip_options = df['ZipCode'].dropna().astype(str).str.zfill(5).unique()
