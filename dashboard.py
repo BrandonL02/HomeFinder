@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 import streamlit.components.v1 as components
-from visualizations import zip_price_map, display_interactive_apartment_map
+from visualizations import zip_price_map
 
 
 app_title = 'Tampa Apartment Rent Analysis'
