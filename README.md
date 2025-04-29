@@ -87,7 +87,7 @@ The goal of this project was two-fold:
 --
 ## ⚙️ Deployment Automation
 
-To ensure the Streamlit app remains active on the free tier (which may put apps to sleep after periods of inactivity), this project uses **GitHub Actions** to ping the app every 30 minutes.
+To ensure the Streamlit app remains active on the free tier (which may put apps to sleep after periods of inactivity), this project uses **GitHub Actions** to ping the app every 12 hours.
 
 --
 
