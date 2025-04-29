@@ -60,6 +60,6 @@ def rent_histogram():
     hist = alt.Chart(df).mark_bar().encode(
         alt.X("AvgPrice", bin=alt.Bin(maxbins=30), title='Average Rent Price'),
         y='count()'
-    ).properties(title='Distribution of Rent Prices')
+    ).properties(title='Distribution of Tampa Apartment Rent Prices')
 
     return hist
