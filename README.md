@@ -2,6 +2,8 @@
 
 This is a **data science and visualization project** built to support apartment hunting in **Tampa, Florida**. It uses web scraping, data analysis, and an interactive Streamlit app to explore rental trends and amenities.
 
+## Access the Streamlit App: https://homefinder-tampa.streamlit.app/
+
 ## Project Purpose
 
 The goal of this project was two-fold:
@@ -70,16 +72,16 @@ The goal of this project was two-fold:
 
 ## 📂 File Structure
 
-├── amenity_separator.py                    # Separates amenity data from apartment data  
-├── apartment_data.db                       # SQLite database  
-├── chromedriver                            # Web Scraping tool for apartments.com  
-├── dashboard.py                            # Streamlit app  
-├── fl_florida_zip_codes_geo.min.json       # Map of florida used to plot zipcodes  
-├── requirements.txt                        # List of dependencies  
-├── sql_main.py                             # Creates SQL tables  
-├── visualizations.py                       # Functions for folium map and altair charts  
-├── zip codes.py                            # Isolate zip codes from scraped data  
-├── zip_price_map.html                      # Rendered folium map  
+├── amenity_separator.py                    # Separates amenity data from apartment data  <br />
+├── apartment_data.db                       # SQLite database  <br />
+├── chromedriver                            # Web Scraping tool for apartments.com  <br />
+├── dashboard.py                            # Streamlit app  <br />
+├── fl_florida_zip_codes_geo.min.json       # Map of florida used to plot zipcodes  <br />
+├── requirements.txt                        # List of dependencies  <br />
+├── sql_main.py                             # Creates SQL tables  <br />
+├── visualizations.py                       # Functions for folium map and altair charts  <br />
+├── zip codes.py                            # Isolate zip codes from scraped data  <br />
+├── zip_price_map.html                      # Rendered folium map  <br />
 └── README.md                               # Project documentation  
 
 --
