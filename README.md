@@ -60,24 +60,27 @@ The goal of this project was two-fold:
 ### Scatter Plot: Average Rent vs Bed Count
 ![Scatter Plot Screenshot](screenshots/bed_vs_price.png)
 
-### Apartment & Amenities Table
+### Apartment Table
 ![Apartment Table Screenshot](screenshots/apartment_table.png)
+
+### Amenities Table
+![Amenity Table Screenshot](screenshots/amenity_table.png)
 
 ---
 
 ## 📂 File Structure
 
-├── amenity_separator.py                    # Separates amenity data from apartment data
-├── apartment_data.db                       # SQLite database
-├── chromedriver                            # Web Scraping tool for apartments.com
-├── dashboard.py                            # Streamlit app
-├── fl_florida_zip_codes_geo.min.json       # Map of florida used to plot zipcodes
-├── requirements.txt                        # List of dependencies
-├── sql_main.py                             # Creates SQL tables
-├── visualizations.py                       # Functions for folium map and altair charts
-├── zip codes.py                            # Isolate zip codes from scraped data
-├── zip_price_map.html                      # Rendered folium map
-└── README.md                               # Project documentation
+├── amenity_separator.py                    # Separates amenity data from apartment data  
+├── apartment_data.db                       # SQLite database  
+├── chromedriver                            # Web Scraping tool for apartments.com  
+├── dashboard.py                            # Streamlit app  
+├── fl_florida_zip_codes_geo.min.json       # Map of florida used to plot zipcodes  
+├── requirements.txt                        # List of dependencies  
+├── sql_main.py                             # Creates SQL tables  
+├── visualizations.py                       # Functions for folium map and altair charts  
+├── zip codes.py                            # Isolate zip codes from scraped data  
+├── zip_price_map.html                      # Rendered folium map  
+└── README.md                               # Project documentation  
 
 --
 
