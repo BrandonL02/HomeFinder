@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 import streamlit.components.v1 as components
-from visualizations import zip_price_map
+from visualizations import zip_price_map, rent_histogram
 
 app_title = 'Tampa Apartment Rent Analysis'
 
@@ -45,6 +45,9 @@ def main():
     st.subheader("Average Rent Price by Zip Code (Map)")
     display_folium_map()
 
+    st.subheader("Histogram of Rent Prices")
+    hist = rent_histogram()
+    st.altair_chart(hist, use_container_width=True)
 
 if __name__ == "__main__":
     main()

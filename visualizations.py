@@ -2,8 +2,8 @@ import time
 import sqlite3
 import pandas as pd
 import folium
-from folium.plugins import MarkerCluster
-import streamlit as st
+import altair as alt
+
 
 
 
@@ -47,3 +47,19 @@ def zip_price_map():
     folium.LayerControl().add_to(m)
 
     return m
+
+def rent_histogram():
+
+    # Load data from the DB
+    conn = sqlite3.connect('apartment_data.db')
+    query = "SELECT MinPrice, MaxPrice FROM apartments"
+    df = pd.read_sql_query(query, conn)
+    conn.close()
+
+    df['AvgPrice'] = (df['MinPrice'] + df['MaxPrice']) / 2
+    hist = alt.Chart(df).mark_bar().encode(
+        alt.X("AvgPrice", bin=alt.Bin(maxbins=30), title='Average Rent Price'),
+        y='count()'
+    ).properties(title='Distribution of Rent Prices')
+
+    return hist
