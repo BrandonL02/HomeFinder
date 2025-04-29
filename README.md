@@ -1,4 +1,4 @@
-# Tampa Apartment Rent Analysis
+# 🏙️Tampa Apartment Rent Analysis
 
 This is a **data science and visualization project** built to support apartment hunting in **Tampa, Florida**. It uses web scraping, data analysis, and an interactive Streamlit app to explore rental trends and amenities.
 
