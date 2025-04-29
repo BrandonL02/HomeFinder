@@ -2,7 +2,7 @@
 
 This is a **data science and visualization project** built to support apartment hunting in **Tampa, Florida**. It uses web scraping, data analysis, and an interactive Streamlit app to explore rental trends and amenities.
 
-## Access the Streamlit App: https://homefinder-tampa.streamlit.app/
+🔗 **[Click here to view the live Streamlit app](https://homefinder-tampa.streamlit.app/)**
 
 ## Project Purpose
 
