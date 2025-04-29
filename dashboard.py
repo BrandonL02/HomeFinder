@@ -52,9 +52,10 @@ def main():
     amenity_df = pd.read_sql_query(query, conn)
     conn.close()
 
-    # Display amenity dataframe
+    # Display amenity dataframe with apartment names
     st.subheader("Apartment Data")
-    st.dataframe(amenity_df)
+    merged_amenity_df = pd.merge(df[['id', 'Apartment']], amenity_df, on='id', how='left').drop(columns=['id'])
+    st.dataframe(merged_amenity_df)
 
 if __name__ == "__main__":
     main()
