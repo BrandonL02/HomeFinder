@@ -103,16 +103,10 @@ def bed_vs_price():
     scatter = alt.Chart(df).mark_circle(size=60).encode(
         x=alt.X('AvgBeds:Q', title='Average Bedroom Count'),
         y=alt.Y('MeanPrice:Q', title='Average Rent Price ($)'),
-        tooltip=['ApartmentName', 'Address', 'MeanPrice', 'AvgBeds']
+        tooltip=['Apartment', 'Address', 'MeanPrice', 'AvgBeds']
     ).properties(
         title='Average Rent vs. Average Bedroom Count'
     )
 
-    st.altair_chart(scatter, use_container_width=True)
+    return scatter
 
-    return df
-
-
-test = bed_vs_price()
-
-print(test)

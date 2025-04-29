@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 import streamlit.components.v1 as components
-from visualizations import zip_price_map, rent_histogram
+from visualizations import zip_price_map, rent_histogram, bed_vs_price
 
 app_title = 'Tampa Apartment Rent Analysis'
 
@@ -48,6 +48,10 @@ def main():
     st.subheader("Histogram of Rent Prices")
     hist = rent_histogram()
     st.altair_chart(hist, use_container_width=True)
+
+    st.subheader("Scatter Plot of Average Rent vs Average Bed Count")
+    scatter = bed_vs_price()
+    st.altair_chart(scatter, use_container_width=True)
 
 if __name__ == "__main__":
     main()
