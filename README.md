@@ -89,6 +89,8 @@ The goal of this project was two-fold:
 
 To ensure the Streamlit app remains active on the free tier (which may put apps to sleep after periods of inactivity), this project uses **GitHub Actions** to ping the app every 12 hours.
 
+--
+
 **Brandon Latimer**  
 _Data Science Enthusiast • Python Developer_
 
