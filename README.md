@@ -2,7 +2,7 @@
 
 This is a **data science and visualization project** built to support apartment hunting in **Tampa, Florida**. It uses web scraping, data analysis, and an interactive Streamlit app to explore rental trends and amenities.
 
-## 📌 Project Purpose
+## Project Purpose
 
 The goal of this project was two-fold:
 1. Assist in my personal apartment search.
@@ -10,7 +10,7 @@ The goal of this project was two-fold:
 
 ---
 
-## 🔍 Features
+## Features
 
 - **Web Scraping** from [Apartments.com](https://www.apartments.com) using `Selenium` and `pandas`.
 - **Relational Data Storage** using **SQLite**, separating apartment data and amenities via a common `id` key.
@@ -22,7 +22,7 @@ The goal of this project was two-fold:
 
 ---
 
-## 🧠 Tech Stack
+## Tech Stack
 
 | Purpose           | Library/Tool       |
 |------------------|--------------------|
