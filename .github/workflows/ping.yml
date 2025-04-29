@@ -1,0 +1,13 @@
+name: Keep Streamlit App Alive
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Every 30 minutes
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Curl Streamlit App
+        run: curl --silent --output /dev/null --show-error https://homefinder-tampa.streamlit.app/
