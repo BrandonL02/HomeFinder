@@ -22,36 +22,39 @@ def main():
     st.title(app_title)
     st.caption(app_sub_title)
 
-    st.markdown("""
-            <style>
-                section[data-testid="stSidebar"] {
-                    display: none !important;
-                }
-                div[data-testid="collapsedControl"] {
-                    display: none !important;
-                }
-            </style>
-        """, unsafe_allow_html=True)
-
-    # Load data from the DB
+    # Load apartment dataframe
     conn = sqlite3.connect('apartment_data.db')
     query = "SELECT * FROM apartments"
     df = pd.read_sql_query(query, conn)
     conn.close()
 
+    # Display apartment dataframe
     st.subheader("Apartment Data")
     st.dataframe(df)
 
+    # Display folium map of average Tampa rent
     st.subheader("Average Rent Price by Zip Code (Map)")
     display_folium_map()
 
+    # Display histogram of Tampa rent
     st.subheader("Histogram of Rent Prices")
     hist = rent_histogram()
     st.altair_chart(hist, use_container_width=True)
 
+    # Display scatter plot of ang rent vs avg bed count
     st.subheader("Scatter Plot of Average Rent vs Average Bed Count")
     scatter = bed_vs_price()
     st.altair_chart(scatter, use_container_width=True)
+
+    # Load amenity dataframe
+    conn = sqlite3.connect('apartment_data.db')
+    query = "SELECT * FROM amenities"
+    amenity_df = pd.read_sql_query(query, conn)
+    conn.close()
+
+    # Display amenity dataframe
+    st.subheader("Apartment Data")
+    st.dataframe(amenity_df)
 
 if __name__ == "__main__":
     main()
