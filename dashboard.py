@@ -31,6 +31,7 @@ def main():
     # Display apartment dataframe
     st.subheader("Apartment Data")
     st.dataframe(df)
+    st.dataframe(df.set_index(df.columns[0]))
 
     # Display folium map of average Tampa rent
     st.subheader("Average Rent Price by Zip Code (Map)")
@@ -54,8 +55,9 @@ def main():
 
     # Display amenity dataframe with apartment names
     st.subheader("Apartment Data")
-    merged_amenity_df = pd.merge(df[['id', 'Apartment']], amenity_df, on='id', how='left').drop(columns=['id'])
+    merged_amenity_df = pd.merge(df[['id', 'Apartment']], amenity_df, on='id', how='left')
     st.dataframe(merged_amenity_df)
+    st.dataframe(merged_amenity_df.set_index(merged_amenity_df.columns[0]))
 
 if __name__ == "__main__":
     main()
