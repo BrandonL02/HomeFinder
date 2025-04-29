@@ -85,12 +85,13 @@ The goal of this project was two-fold:
 └── README.md                               # Project documentation  
 
 --
+## ⚙️ Deployment Automation
+
+To ensure the Streamlit app remains active on the free tier (which may put apps to sleep after periods of inactivity), this project uses **GitHub Actions** to ping the app every 12 hours.
 
 **Brandon Latimer**  
 _Data Science Enthusiast • Python Developer_
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)]([https://linkedin.com/in/yourname](https://www.linkedin.com/in/brandon-latimer-a27527297/))  
-
-
 
 
