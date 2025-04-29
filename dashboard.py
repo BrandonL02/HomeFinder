@@ -57,7 +57,6 @@ def main():
     st.subheader("Apartment Data")
     merged_amenity_df = pd.merge(df[['id', 'Apartment']], amenity_df, on='id', how='left')
     st.dataframe(merged_amenity_df)
-    st.dataframe(merged_amenity_df.set_index(merged_amenity_df.columns[0]))
 
 if __name__ == "__main__":
     main()
