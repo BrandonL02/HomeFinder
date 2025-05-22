@@ -1,0 +1,11 @@
+{
+  "name": "streamlit-wakeup",
+  "version": "1.0.0",
+  "main": "wakeup.js",
+  "scripts": {
+    "start": "node wakeup.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.3.8"
+  }
+}
