@@ -10,12 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install selenium
@@ -31,44 +34,6 @@ jobs:
           unzip chromedriver_linux64.zip
           sudo mv chromedriver /usr/local/bin/
           sudo chmod +x /usr/local/bin/chromedriver
-
-      - name: Create Python script
-        run: |
-          cat <<EOF > wakeup.py
-import datetime
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-
-STREAMLIT_APPS = ['https://homefinder-tampa.streamlit.app/']
-
-options = Options()
-options.add_argument('--headless')
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
-driver = webdriver.Chrome(options=options)
-
-for url in STREAMLIT_APPS:
-    print(f'🔍 Visiting {url}')
-    try:
-        driver.get(url)
-        WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
-        try:
-            button = WebDriverWait(driver, 10).until(
-                EC.element_to_be_clickable((By.XPATH, "//button[text()='Yes, get this app back up!']"))
-            )
-            button.click()
-            print(f'✅ Woke up app at: {url}')
-        except TimeoutException:
-            print(f'🟢 No wake-up needed at: {url}')
-    except Exception as e:
-        print(f'❌ Error with {url}: {e}')
-
-driver.quit()
-EOF
 
       - name: Run Wake Up Script
         run: python wakeup.py
