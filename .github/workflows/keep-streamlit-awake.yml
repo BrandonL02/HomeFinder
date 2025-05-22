@@ -1,0 +1,42 @@
+name: Keep Streamlit App Awake
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Every 6 hours
+  workflow_dispatch:
+
+jobs:
+  wakeup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Puppeteer
+        run: npm install puppeteer
+
+      - name: Run Wake Up Script
+        run: node wakeup.js
+
+      - name: Create wakeup.js file
+        run: |
+          echo "const puppeteer = require('puppeteer');
+
+          (async () => {
+            const browser = await puppeteer.launch({
+              headless: 'new',
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+
+            const page = await browser.newPage();
+            await page.goto('https://homefinder-tampa.streamlit.app/', { waitUntil: 'networkidle2' });
+
+            // Wait to simulate a user hanging around
+            await page.waitForTimeout(15000); // 15 seconds
+
+            console.log('✅ App visited successfully.');
+            await browser.close();
+          })();" > wakeup.js
