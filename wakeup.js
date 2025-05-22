@@ -1,43 +1,29 @@
 const puppeteer = require('puppeteer');
 
 (async () => {
-  const browser = await puppeteer.launch({
-    headless: "new",  // or true
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
-
+  const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
+
   await page.goto('https://homefinder-tampa.streamlit.app/', {
     waitUntil: 'networkidle2',
-    timeout: 0
+    timeout: 0,
   });
 
-  // Wait for the iframe to be available
-  const iframeElementHandle = await page.waitForSelector('iframe', { timeout: 10000 });
-  const iframe = await iframeElementHandle.contentFrame();
-
-  if (!iframe) {
-    console.log('Could not get iframe content.');
-    await browser.close();
-    return;
-  }
-
   try {
-    await iframe.waitForSelector('button', { timeout: 10000 });
+    // Wait up to 10 seconds for the wake-up button to appear
+    await page.waitForSelector('button', { timeout: 10000 });
 
-    const buttonText = await iframe.evaluate(() => {
-      const button = document.querySelector('button');
-      return button?.innerText || '';
-    });
+    // Find the button with the exact or partial text
+    const buttonHandle = await page.$x("//button[contains(., 'Yes, get this app back up!')]");
 
-    if (buttonText.includes('Yes, get this app back up!')) {
-      await iframe.click('button');
+    if (buttonHandle.length > 0) {
+      await buttonHandle[0].click();
       console.log('Wake up button clicked!');
     } else {
-      console.log('No wake-up button found; app is already up.');
+      console.log('Wake up button not found - app may already be active.');
     }
-  } catch (err) {
-    console.log('No button found or page is already up.');
+  } catch (error) {
+    console.log('Button not found within timeout, assuming app is already active.');
   }
 
   await browser.close();
