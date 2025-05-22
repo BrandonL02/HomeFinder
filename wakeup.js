@@ -10,20 +10,20 @@ const puppeteer = require('puppeteer');
   });
 
   try {
-    // Wait up to 10 seconds for the wake-up button to appear
-    await page.waitForSelector('button', { timeout: 10000 });
+    // Wait for the button at the XPath
+    await page.waitForXPath('/html/body/div[1]/div[1]/div/div/div/div/button', { timeout: 10000 });
 
-    // Find the button with the exact or partial text
-    const buttonHandle = await page.$x("//button[contains(., 'Yes, get this app back up!')]");
+    // Get the button element handle
+    const [button] = await page.$x('/html/body/div[1]/div[1]/div/div/div/div/button');
 
-    if (buttonHandle.length > 0) {
-      await buttonHandle[0].click();
-      console.log('Wake up button clicked!');
+    if (button) {
+      await button.click();
+      console.log('Clicked the wake-up button!');
     } else {
-      console.log('Wake up button not found - app may already be active.');
+      console.log('Wake-up button not found - app may already be active.');
     }
   } catch (error) {
-    console.log('Button not found within timeout, assuming app is already active.');
+    console.log('Wake-up button not found or timeout reached, assuming app is already active.');
   }
 
   await browser.close();
