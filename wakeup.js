@@ -4,7 +4,7 @@ const fs = require('fs');
 (async () => {
   console.log('💤 Checking if app needs waking up...');
 
-  const browser = await puppeteer.launch({ headless: false, slowMo: 50 }); // Headed mode for visibility
+  const browser = await puppeteer.launch({ headless: false, slowMo: 50 });
   const page = await browser.newPage();
 
   await page.goto('https://homefinder-tampa.streamlit.app/', {
@@ -12,10 +12,10 @@ const fs = require('fs');
     timeout: 0,
   });
 
-  // Wait a bit extra to allow the Streamlit JS to render the button
-  await page.waitForTimeout(8000);
+  await page.waitForTimeout(8000); // Wait for Streamlit to finish animations
 
-  // Save screenshot + HTML no matter what
+  const selector = 'button[data-testid="wakeup-button-owner"]';
+
   const saveDebug = async () => {
     await page.screenshot({ path: 'debug.png', fullPage: true });
     const html = await page.content();
@@ -24,19 +24,29 @@ const fs = require('fs');
   };
 
   try {
-    const selector = 'button[data-testid="wakeup-button-owner"]';
-    const exists = await page.$(selector);
+    // Ensure element is in the DOM
+    await page.waitForSelector(selector, { timeout: 10000, visible: true });
 
-    if (exists) {
-      await exists.click();
-      console.log('✅ Clicked the wake-up button!');
+    // Scroll into view and click via JS
+    const clicked = await page.evaluate((sel) => {
+      const btn = document.querySelector(sel);
+      if (btn) {
+        btn.scrollIntoView();
+        btn.click(); // Trigger native click
+        return true;
+      }
+      return false;
+    }, selector);
+
+    if (clicked) {
+      console.log('✅ Button found and clicked via JS!');
     } else {
-      console.log('❌ Button not found! Logging HTML for analysis...');
+      console.log('❌ Button not found or not clickable.');
     }
 
     await saveDebug();
-  } catch (err) {
-    console.error('❌ Error during Puppeteer execution:', err.message);
+  } catch (error) {
+    console.error('❌ Error during button click:', error.message);
     await saveDebug();
   }
 
