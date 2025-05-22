@@ -3,8 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
-STREAMLIT_APPS = ['https://homefinder-tampa.streamlit.app/']
 import datetime
+
+STREAMLIT_APPS = ['https://homefinder-tampa.streamlit.app/']
 
 # Set up Selenium webdriver
 options = webdriver.ChromeOptions()
