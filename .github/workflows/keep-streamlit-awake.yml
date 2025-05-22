@@ -18,9 +18,6 @@ jobs:
       - name: Install Puppeteer
         run: npm install puppeteer
 
-      - name: Run Wake Up Script
-        run: node wakeup.js
-
       - name: Create wakeup.js file
         run: |
           echo "const puppeteer = require('puppeteer');
@@ -32,11 +29,31 @@ jobs:
             });
 
             const page = await browser.newPage();
-            await page.goto('https://homefinder-tampa.streamlit.app/', { waitUntil: 'networkidle2' });
+            await page.goto('https://homefinder-tampa.streamlit.app/', {
+              waitUntil: 'networkidle2',
+              timeout: 0
+            });
 
-            // Wait to simulate a user hanging around
-            await page.waitForTimeout(15000); // 15 seconds
+            try {
+              await page.waitForSelector('button', { timeout: 10000 });
+              const buttonText = await page.evaluate(() => {
+                const btn = document.querySelector('button');
+                return btn?.innerText || '';
+              });
 
-            console.log('✅ App visited successfully.');
+              if (buttonText.includes('Yes, get this app back up')) {
+                console.log('💤 App is sleeping. Waking it up...');
+                await page.click('button');
+                await page.waitForTimeout(10000); // Wait for the app to fully load
+              } else {
+                console.log('✅ App is already awake.');
+              }
+            } catch (e) {
+              console.log('🛑 No button found. Assuming app is already active.');
+            }
+
             await browser.close();
           })();" > wakeup.js
+
+      - name: Run Wake Up Script
+        run: node wakeup.js
